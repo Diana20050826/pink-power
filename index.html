@@ -1,0 +1,566 @@
+
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f22b87">
+  <meta name="description" content="PINK POWER — o teu espaço pessoal de treino, planeamento e progresso.">
+  <title>PINK POWER | O teu universo fitness</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#inicio" aria-label="PINK POWER, início">
+      <span class="brand-symbol">P<span>+</span></span>
+      <span>PINK <b>POWER</b><small>YOUR PERSONAL FITNESS SPACE</small></span>
+    </a>
+
+    <div class="profile-mini">
+      <div class="avatar">D<span>♥</span></div>
+      <div><strong>Diana Martins</strong><small>O teu espaço pessoal</small></div>
+      <span class="online-dot"></span>
+    </div>
+
+    <p class="nav-heading">O TEU ESPAÇO</p>
+    <nav class="navigation">
+      <a class="nav-link active" href="#inicio"><span>⌂</span> Início</a>
+      <a class="nav-link" href="#planeador"><span>▦</span> Planeador semanal</a>
+      <a class="nav-link" href="#calendario"><span>▣</span> Calendário</a>
+      <a class="nav-link" href="#treinos"><span>♧</span> Os meus treinos</a>
+      <a class="nav-link" href="#exercicios"><span>✳</span> Exercícios</a>
+      <a class="nav-link" href="#criador"><span>＋</span> Criar treino</a>
+      <a class="nav-link" href="#progresso"><span>↗</span> Progresso</a>
+      <a class="nav-link" href="#bem-estar"><span>♡</span> Diário de bem-estar</a>
+      <a class="nav-link" href="#conquistas"><span>♕</span> Conquistas</a>
+      <a class="nav-link" href="#definicoes"><span>⚙</span> Definições</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="side-quote">
+        <span>✦ LEMBRA-TE</span>
+        <p>Não precisas de ser perfeita. Só precisas de cuidar de ti.</p>
+        <span class="quote-heart">♡</span>
+      </div>
+      <p class="version">PINK POWER <span>v3.0</span></p>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <button class="icon-button menu-button" id="menuButton" aria-label="Abrir menu">☰</button>
+      <div class="breadcrumb">O TEU ESPAÇO <span>/</span> <b id="pageName">INÍCIO</b></div>
+      <div class="topbar-right">
+        <span class="today-chip">◷ <span id="todayLabel"></span></span>
+        <div class="top-avatar">D</div>
+      </div>
+    </header>
+
+    <section class="welcome-section section" id="inicio">
+      <div class="welcome-copy">
+        <span class="eyebrow"><span class="pink-dot"></span> A TUA JORNADA COMEÇA AQUI</span>
+        <h1>Olá, Diana<span class="pink-text">!</span><br>Vamos cuidar de ti<span class="pink-text">?</span></h1>
+        <p>Um passo de cada vez. Um treino de cada vez. O teu progresso, ao teu ritmo.</p>
+        <div class="welcome-actions">
+          <a class="button button-primary" href="#treinos">♡ Começar a treinar <span>→</span></a>
+          <a class="button button-ghost" href="#calendario">Ver calendário</a>
+        </div>
+        <div class="welcome-note"><span>✦</span> Consistência acima da perfeição.</div>
+      </div>
+      <div class="hero-art">
+        <div class="hero-ring"></div>
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
+        <div class="hero-sticker sticker-top">GIRL POWER ✦</div>
+        <div class="hero-number">01<span>/∞</span></div>
+        <div class="hero-card">
+          <span class="hero-heart">♥</span>
+          <span>O TEU RITMO</span>
+          <strong>O teu progresso<br>é só teu.</strong>
+          <small>Feito com carinho, para Diana.</small>
+        </div>
+        <div class="hero-sticker sticker-bottom">YOU CAN DO IT!</div>
+      </div>
+    </section>
+
+    <section class="daily-banner section">
+      <div class="daily-icon" id="dailyIcon">♡</div>
+      <div class="daily-copy">
+        <span class="eyebrow">O TEU PLANO PARA HOJE</span>
+        <h2 id="dailyTitle">Vamos descobrir o teu dia?</h2>
+        <p id="dailyMessage">O teu plano aparece aqui.</p>
+      </div>
+      <a class="button button-dark" id="dailyAction" href="#treinos">Ver plano <span>→</span></a>
+    </section>
+
+    <section class="stats-grid section" aria-label="Resumo do progresso">
+      <article class="stat-card">
+        <div class="stat-top"><span>Dias treinados</span><span class="stat-icon">♥</span></div>
+        <div class="stat-number" id="totalDays">0 <small>dias</small></div>
+        <p>Desde o início da tua jornada</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Tempo de treino</span><span class="stat-icon">◷</span></div>
+        <div class="stat-number"><span id="totalMinutes">0</span> <small>min</small></div>
+        <p>Minutos de sessões concluídas</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Este mês</span><span class="stat-icon">▦</span></div>
+        <div class="stat-number" id="monthDays">0 <small>dias</small></div>
+        <p>Dias marcados no calendário</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Objetivo semanal</span><span class="stat-icon">✦</span></div>
+        <div class="stat-number" id="weeklyCount">0/4</div>
+        <p>Treinos registados esta semana</p>
+      </article>
+    </section>
+
+    <section class="section" id="planeador">
+      <div class="section-heading">
+        <div><span class="eyebrow">ORGANIZA-TE</span><h2>O teu planeador semanal <span class="pink-text">✦</span></h2>
+          <p>Quatro dias de treino sugeridos, com tempo para recuperar.</p>
+        </div>
+        <button class="button button-ghost button-small" id="resetWeek">Repor plano</button>
+      </div>
+      <div class="weekly-grid" id="weeklyGrid"></div>
+      <p class="microcopy">Podes alterar o treino de cada dia. Descansar também faz parte do plano.</p>
+    </section>
+
+    <section class="section" id="calendario">
+      <div class="section-heading">
+        <div><span class="eyebrow">A TUA CONSISTÊNCIA</span><h2>O teu calendário <span class="pink-text">♡</span></h2>
+          <p>Seleciona um dia e marca quando tiveres treinado.</p>
+        </div>
+        <span class="mini-label">GUARDADO NESTE NAVEGADOR</span>
+      </div>
+
+      <div class="calendar-layout">
+        <div class="panel calendar-panel">
+          <div class="calendar-header">
+            <button class="icon-button" id="prevMonth" aria-label="Mês anterior">←</button>
+            <h3 id="calendarMonth">Mês</h3>
+            <button class="icon-button" id="nextMonth" aria-label="Mês seguinte">→</button>
+          </div>
+          <div class="calendar-weekdays">
+            <span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span><span>DOM</span>
+          </div>
+          <div class="calendar-days" id="calendarDays"></div>
+          <div class="calendar-legend">
+            <span><i class="legend-dot legend-today"></i> Hoje</span>
+            <span><i class="legend-dot legend-trained"></i> Treino marcado</span>
+          </div>
+          <button class="text-button" id="todayButton">↺ Voltar a hoje</button>
+        </div>
+
+        <aside class="panel selected-day-panel">
+          <span class="eyebrow">DIA SELECIONADO</span>
+          <div class="selected-date-icon">♡</div>
+          <h3 id="selectedDateLabel">Escolhe um dia</h3>
+          <p id="selectedDateDescription">Regista a tua atividade ou consulta o teu dia.</p>
+          <div class="selected-status" id="selectedStatus">○ Ainda sem marcação</div>
+          <button class="button button-primary button-full" id="toggleSelectedDay">♡ Marcar como treinado</button>
+          <button class="button button-ghost button-full" id="selectedDayWorkout">Escolher treino</button>
+          <div class="calendar-month-progress">
+            <div class="progress-heading"><span>Consistência mensal</span><b id="calendarMonthCount">0 dias</b></div>
+            <div class="progress-track"><div id="monthProgressBar" class="progress-fill"></div></div>
+            <p id="monthGoalText">Cada dia conta.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="treinos">
+      <div class="section-heading">
+        <div><span class="eyebrow">ESCOLHE O TEU MOMENTO</span><h2>Os teus treinos <span class="pink-text">♥</span></h2>
+          <p>Sessões pensadas para iniciares com calma e boa técnica.</p>
+        </div>
+      </div>
+      <div class="workout-grid">
+        <article class="workout-card workout-pink">
+          <div class="workout-top"><span class="workout-tag">DIA 01 · PERNAS</span><span class="workout-emoji">✳</span></div>
+          <h3>Pernas &<br>glúteos</h3><p>Movimentos básicos para praticar a técnica.</p>
+          <div class="workout-meta"><span>◷ 20–25 min</span><span>♧ Iniciante</span></div>
+          <button class="button button-dark start-workout" data-workout="pernas">Começar treino →</button>
+        </article>
+        <article class="workout-card workout-dark">
+          <div class="workout-top"><span class="workout-tag">DIA 02 · GLÚTEOS</span><span class="workout-emoji">♡</span></div>
+          <h3>Glúteos &<br>estabilidade</h3><p>Controlo, equilíbrio e movimentos suaves.</p>
+          <div class="workout-meta"><span>◷ 15–20 min</span><span>♧ Iniciante</span></div>
+          <button class="button button-light start-workout" data-workout="gluteos">Começar treino →</button>
+        </article>
+        <article class="workout-card workout-white">
+          <div class="workout-top"><span class="workout-tag">DIA 03 · PERNAS</span><span class="workout-emoji">✦</span></div>
+          <h3>Pernas em<br>movimento</h3><p>Treino com alternativas apoiadas.</p>
+          <div class="workout-meta"><span>◷ 20–25 min</span><span>♧ Iniciante</span></div>
+          <button class="button button-dark start-workout" data-workout="pernas2">Começar treino →</button>
+        </article>
+        <article class="workout-card workout-outline">
+          <div class="workout-top"><span class="workout-tag">DIA 04 · SUAVE</span><span class="workout-emoji">☼</span></div>
+          <h3>Corpo<br>ativo</h3><p>Uma sessão leve para praticar movimentos.</p>
+          <div class="workout-meta"><span>◷ 15–20 min</span><span>♧ Suave</span></div>
+          <button class="button button-primary start-workout" data-workout="ativo">Começar treino →</button>
+        </article>
+      </div>
+      <div class="notice"><span>♡</span><p><b>O teu bem-estar vem primeiro.</b> Faz o aquecimento, utiliza uma banda adequada e descansa quando precisares. Interrompe se sentires dor.</p></div>
+    </section>
+
+    <section class="section" id="exercicios">
+      <div class="section-heading">
+        <div><span class="eyebrow">APRENDE A EXECUTAR</span><h2>Biblioteca de exercícios <span class="pink-text">✳</span></h2>
+          <p>Consulta as imagens, os passos e as sugestões de execução.</p>
+        </div>
+      </div>
+      <div class="filter-row" id="exerciseFilters">
+        <button class="filter-button active" data-filter="todos">Todos</button>
+        <button class="filter-button" data-filter="aquecimento">Aquecimento</button>
+        <button class="filter-button" data-filter="pernas">Pernas</button>
+        <button class="filter-button" data-filter="gluteos">Glúteos</button>
+      </div>
+      <div class="exercise-grid" id="exerciseGrid"></div>
+    </section>
+
+    <section class="section" id="criador">
+      <div class="section-heading">
+        <div><span class="eyebrow">À TUA MANEIRA</span><h2>Cria o teu treino <span class="pink-text">＋</span></h2>
+          <p>Escolhe os exercícios e guarda uma sessão personalizada.</p>
+        </div>
+      </div>
+      <div class="creator-layout">
+        <div class="panel creator-panel">
+          <label class="field-label" for="customWorkoutName">Nome do treino</label>
+          <input id="customWorkoutName" class="field" maxlength="50" placeholder="Ex.: O meu treino favorito">
+          <label class="field-label" for="customWorkoutMinutes">Duração aproximada</label>
+          <select id="customWorkoutMinutes" class="field">
+            <option value="10">10 minutos</option><option value="15">15 minutos</option>
+            <option value="20" selected>20 minutos</option><option value="25">25 minutos</option>
+            <option value="30">30 minutos</option>
+          </select>
+          <p class="field-label">Seleciona os exercícios</p>
+          <div id="creatorExerciseList" class="creator-exercise-list"></div>
+          <button class="button button-primary button-full" id="saveCustomWorkout">Guardar treino personalizado ♡</button>
+        </div>
+        <div class="panel creator-preview">
+          <span class="eyebrow">PRÉ-VISUALIZAÇÃO</span>
+          <div class="creator-big-icon">✳</div>
+          <h3 id="creatorPreviewTitle">O teu treino</h3>
+          <p id="creatorPreviewCount">Seleciona exercícios para começar.</p>
+          <div id="creatorPreviewList" class="creator-preview-list"></div>
+          <p class="microcopy">Começa com poucos exercícios e dá prioridade à técnica e ao conforto.</p>
+        </div>
+      </div>
+      <div id="savedCustomWorkouts" class="saved-custom-grid"></div>
+    </section>
+
+    <section class="section" id="progresso">
+      <div class="section-heading">
+        <div><span class="eyebrow">CADA PASSO CONTA</span><h2>O teu progresso <span class="pink-text">↗</span></h2>
+          <p>Acompanha a tua consistência e celebra as pequenas vitórias.</p>
+        </div>
+        <button class="button button-ghost button-small" id="exportData">↓ Exportar registo</button>
+      </div>
+      <div class="progress-layout">
+        <div class="panel progress-panel">
+          <div class="progress-heading"><div><span class="eyebrow">OBJETIVO MENSAL DE REFERÊNCIA</span><h3>Um passo de cada vez</h3></div><strong id="progressPercent">0%</strong></div>
+          <div class="progress-track progress-track-large"><div id="progressBar" class="progress-fill"></div></div>
+          <p id="progressMessage">Cada dia marcado conta como uma vitória.</p>
+          <div class="progress-stats">
+            <div><span>Dias marcados</span><b id="progressDays">0</b></div>
+            <div><span>Minutos registados</span><b id="progressMinutes">0</b></div>
+            <div><span>Sessões concluídas</span><b id="progressSessions">0</b></div>
+          </div>
+          <div class="chart-wrap"><canvas id="progressChart" height="190" aria-label="Gráfico de treinos por semana"></canvas></div>
+        </div>
+        <div class="panel history-panel">
+          <div class="history-heading"><div><span class="eyebrow">AS TUAS SESSÕES</span><h3>Histórico recente</h3></div><span class="history-icon">♥</span></div>
+          <div id="recentHistory" class="recent-history"></div>
+          <button class="text-button" id="clearHistory">Limpar todo o histórico</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="bem-estar">
+      <div class="section-heading">
+        <div><span class="eyebrow">ESCUTA-TE</span><h2>Diário de bem-estar <span class="pink-text">♡</span></h2>
+          <p>Regista como te sentes. Não tens de treinar todos os dias.</p>
+        </div>
+      </div>
+      <div class="wellbeing-layout">
+        <div class="panel wellbeing-form">
+          <label class="field-label" for="wellbeingDate">Dia</label>
+          <input class="field" id="wellbeingDate" type="date">
+          <label class="field-label">Como está a tua energia?</label>
+          <div class="mood-options" id="energyOptions">
+            <button type="button" class="mood-button" data-mood="1"><span>☁</span><small>Baixa</small></button>
+            <button type="button" class="mood-button" data-mood="2"><span>☻</span><small>Assim-assim</small></button>
+            <button type="button" class="mood-button" data-mood="3"><span>✦</span><small>Boa</small></button>
+            <button type="button" class="mood-button" data-mood="4"><span>♥</span><small>Ótima</small></button>
+          </div>
+          <label class="field-label" for="wellbeingNotes">Notas do dia</label>
+          <textarea class="field textarea" id="wellbeingNotes" rows="4" maxlength="1000" placeholder="Como te sentiste? O que correu bem? O que queres recordar?"></textarea>
+          <button class="button button-primary button-full" id="saveWellbeing">Guardar entrada ♡</button>
+          <p class="microcopy">As tuas notas ficam guardadas localmente neste navegador.</p>
+        </div>
+        <div class="panel wellbeing-history">
+          <span class="eyebrow">OS TEUS REGISTOS</span>
+          <h3>Um bocadinho sobre ti</h3>
+          <div id="wellbeingEntries"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="conquistas">
+      <div class="section-heading">
+        <div><span class="eyebrow">PEQUENAS VITÓRIAS</span><h2>As tuas conquistas <span class="pink-text">♕</span></h2>
+          <p>Desbloqueadas pela tua consistência, nunca pela perfeição.</p>
+        </div>
+      </div>
+      <div class="achievement-grid" id="achievementGrid"></div>
+    </section>
+
+    <section class="section" id="definicoes">
+      <div class="section-heading">
+        <div><span class="eyebrow">PERSONALIZA O TEU ESPAÇO</span><h2>Definições <span class="pink-text">⚙</span></h2>
+          <p>Adapta o PINK POWER à tua rotina.</p>
+        </div>
+      </div>
+      <div class="settings-grid">
+        <div class="panel settings-panel">
+          <h3>O teu perfil</h3>
+          <label class="field-label" for="profileName">Nome apresentado</label>
+          <input class="field" id="profileName" maxlength="40" value="Diana">
+          <label class="field-label" for="weeklyGoal">Objetivo semanal de treinos</label>
+          <select class="field" id="weeklyGoal">
+            <option value="2">2 dias</option><option value="3">3 dias</option>
+            <option value="4" selected>4 dias</option><option value="5">5 dias</option>
+          </select>
+          <label class="field-label" for="restDuration">Descanso entre séries</label>
+          <select class="field" id="restDuration">
+            <option value="20">20 segundos</option><option value="30" selected>30 segundos</option>
+            <option value="45">45 segundos</option><option value="60">60 segundos</option>
+            <option value="90">90 segundos</option>
+          </select>
+          <button class="button button-primary" id="saveSettings">Guardar definições</button>
+        </div>
+        <div class="panel settings-panel">
+          <h3>Os teus favoritos</h3>
+          <p class="muted">Marca os exercícios de que gostas para os encontrares facilmente.</p>
+          <div id="favoriteSettings"></div>
+          <h3 class="settings-subtitle">Os teus dados</h3>
+          <button class="button button-ghost button-full" id="importDataButton">↑ Importar cópia de segurança</button>
+          <input type="file" id="importDataFile" accept=".json,application/json" hidden>
+          <p class="microcopy">Importar uma cópia substitui os registos atuais. Exporta primeiro os dados que queres preservar.</p>
+          <button class="button button-danger button-full" id="resetAllData">Apagar todos os dados locais</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#inicio"><span class="brand-symbol">P<span>+</span></span><span>PINK <b>POWER</b></span></a>
+      <p>Feito com <span class="pink-text">♥</span> para a Diana.</p>
+      <a href="#inicio" class="text-button">Voltar ao início ↑</a>
+    </footer>
+<!-- PINK POWER: NOVAS FUNCIONALIDADES -->
+
+<section class="pink-world" id="pink-world">
+  <div class="pink-world-heading">
+    <span class="pink-eyebrow">✦ O TEU PEQUENO UNIVERSO ✦</span>
+    <h2>Pink World <span>♡</span></h2>
+    <p>Treina, diverte-te e cuida do teu companheiro virtual!</p>
+  </div>
+
+  <!-- PINK PET -->
+  <article class="pink-card pet-card" id="pink-pet">
+    <div class="pink-card-heading">
+      <div>
+        <span class="pink-tag">O TEU COMPANHEIRO</span>
+        <h3>🐱 Pink Pet</h3>
+      </div>
+      <span class="pink-level" id="pet-level">Nível 1</span>
+    </div>
+
+    <div class="pet-stage" id="pet-stage">
+      <div class="pet-sparkle sparkle-one">✦</div>
+      <div class="pet-sparkle sparkle-two">✧</div>
+
+      <div class="pet-character" id="pet-character">
+        <div class="pet-ears">
+          <span class="pet-ear"></span>
+          <span class="pet-ear"></span>
+        </div>
+        <div class="pet-face">
+          <span class="pet-eye eye-left"></span>
+          <span class="pet-eye eye-right"></span>
+          <span class="pet-blush blush-left"></span>
+          <span class="pet-blush blush-right"></span>
+          <span class="pet-nose"></span>
+          <span class="pet-mouth">ᴗ</span>
+          <span class="pet-whiskers whiskers-left">≋</span>
+          <span class="pet-whiskers whiskers-right">≋</span>
+        </div>
+        <div class="pet-belly"></div>
+        <div class="pet-paws">
+          <span></span><span></span>
+        </div>
+        <div class="pet-accessory" id="pet-accessory">🎀</div>
+      </div>
+
+      <div class="pet-shadow"></div>
+    </div>
+
+    <div class="pet-speech" id="pet-message">
+      Miau! Olá, Diana! Vamos tornar este dia especial? 💗
+    </div>
+
+    <div class="pet-stats">
+      <div>
+        <span>⭐ Estrelas</span>
+        <strong id="pet-stars">0</strong>
+      </div>
+      <div>
+        <span>💖 Carinho</span>
+        <strong id="pet-love">0</strong>
+      </div>
+      <div>
+        <span>🏆 Conquistas</span>
+        <strong id="pet-achievements">0</strong>
+      </div>
+    </div>
+
+    <div class="pet-name-row">
+      <label for="pet-name-input">Nome do gatinho</label>
+      <div class="pink-input-row">
+        <input id="pet-name-input" maxlength="18"
+               placeholder="Ex.: Mochi">
+        <button class="pink-button" id="save-pet-name">Guardar</button>
+      </div>
+    </div>
+
+    <div class="pet-actions">
+      <button class="pink-button" id="pet-pet-button">♡ Fazer festinhas</button>
+      <button class="pink-button pink-button-light" id="pet-play-button">
+        ✨ Brincar
+      </button>
+    </div>
+
+    <p class="pink-hint">
+      O teu gatinho também gosta de dias tranquilos. Não precisas de treinar
+      para cuidares dele! 🐾
+    </p>
+  </article>
+
+  <!-- PINK CLOSET -->
+  <article class="pink-card closet-card" id="pink-closet">
+    <div class="pink-card-heading">
+      <div>
+        <span class="pink-tag">PERSONALIZA O TEU MUNDO</span>
+        <h3>🎀 Pink Closet</h3>
+      </div>
+      <span class="pink-level">Coleção</span>
+    </div>
+
+    <p class="pink-description">
+      Desbloqueia acessórios com estrelas e cria o teu estilo favorito.
+    </p>
+
+    <div class="closet-balance">
+      <span>O teu saldo</span>
+      <strong>⭐ <span id="closet-stars">0</span></strong>
+    </div>
+
+    <div class="closet-grid" id="closet-grid"></div>
+
+    <div class="closet-preview">
+      <span>O teu acessório atual:</span>
+      <strong id="equipped-item">🎀 Laço rosa</strong>
+    </div>
+
+    <button class="pink-button pink-button-light" id="remove-accessory">
+      Retirar acessório
+    </button>
+  </article>
+
+  <!-- ENVELOPES SURPRESA -->
+  <article class="pink-card envelopes-card" id="pink-envelopes">
+    <div class="pink-card-heading">
+      <div>
+        <span class="pink-tag">UMA SURPRESA PARA TI</span>
+        <h3>💌 Envelopes surpresa</h3>
+      </div>
+      <span class="pink-level" id="envelope-count">0 por abrir</span>
+    </div>
+
+    <p class="pink-description">
+      Completa pequenas conquistas para receberes cartas, mensagens
+      especiais e recompensas virtuais.
+    </p>
+
+    <div class="envelope-display" id="envelope-display">
+      <button class="envelope" id="open-envelope"
+              aria-label="Abrir envelope surpresa">
+        <span class="envelope-glow">✦</span>
+        <span class="envelope-emoji">💌</span>
+        <span class="envelope-label">ABRIR SURPRESA</span>
+      </button>
+    </div>
+
+    <div class="envelope-result" id="envelope-result" hidden>
+      <span class="result-sparkle">✨</span>
+      <h4 id="envelope-title">Uma mensagem para ti</h4>
+      <p id="envelope-message"></p>
+      <button class="pink-button" id="close-envelope">Que fofo! 💗</button>
+    </div>
+
+    <p class="pink-hint" id="envelope-hint">
+      A tua primeira surpresa chega quando registares o teu primeiro treino!
+    </p>
+
+    <div class="envelope-history">
+      <h4>📖 As tuas cartas</h4>
+      <div id="opened-envelopes">
+        Ainda não abriste nenhuma carta.
+      </div>
+    </div>
+  </article>
+</section>
+
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal-backdrop" id="workoutModal" hidden>
+    <section class="workout-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <div><span class="eyebrow">PINK POWER · MODO DE TREINO</span><h2 id="modalTitle">Vamos a isso, Diana!</h2></div>
+        <button class="icon-button" id="closeModal" aria-label="Fechar treino">×</button>
+      </div>
+      <p id="modalIntro" class="muted"></p>
+      <div class="session-progress-track"><div id="sessionProgressBar"></div></div>
+      <span id="sessionCounter" class="eyebrow">Exercício 1</span>
+      <div class="session-exercise">
+        <img id="sessionImage" src="" alt="Demonstração do exercício">
+        <div class="session-details"><h3 id="sessionExercise"></h3><p id="sessionInstructions"></p><strong id="sessionPrescription"></strong></div>
+      </div>
+      <div class="timer-panel">
+        <div><span class="eyebrow">DESCANSO</span><div id="timerDisplay" class="timer-display">00:30</div></div>
+        <div class="timer-actions"><button class="button button-primary" id="timerStart">Iniciar descanso</button><button class="button button-ghost" id="timerReset">Reiniciar</button></div>
+      </div>
+      <div class="modal-navigation"><button class="button button-ghost" id="previousExercise">← Anterior</button><button class="button button-ghost" id="nextExercise">Seguinte →</button></div>
+      <div class="modal-finish"><p>Faz pausas sempre que precisares. Podes concluir a sessão quando terminares.</p><button class="button button-dark button-full" id="finishWorkout">Concluir sessão e registar ✓</button></div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="confirmModal" hidden>
+    <section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="selected-date-icon">♡</div>
+      <h2 id="confirmTitle">Tens a certeza?</h2>
+      <p id="confirmMessage">Esta ação não pode ser desfeita.</p>
+      <div class="confirm-actions"><button class="button button-ghost" id="cancelConfirm">Cancelar</button><button class="button button-danger" id="acceptConfirm">Confirmar</button></div>
+    </section>
+  </div>
+</body>
+</html>
