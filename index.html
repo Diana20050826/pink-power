@@ -484,6 +484,90 @@
     </button>
   </article>
 
+<!-- MEU PERFIL PINK POWER -->
+<section class="pink-profile" id="pink-profile">
+  <div class="profile-heading">
+    <span class="profile-eyebrow">✦ O MEU ESPAÇO ✦</span>
+    <h2>💗 O MEU PERFIL</h2>
+    <p>Este cantinho é só teu. Personaliza-o como quiseres!</p>
+  </div>
+
+  <div class="profile-card">
+    <div class="profile-preview">
+      <div class="profile-avatar-wrap">
+        <img
+          id="profile-photo-preview"
+          class="profile-avatar"
+          alt="Fotografia de perfil"
+          hidden
+        />
+        <div id="profile-avatar-placeholder" class="profile-avatar-placeholder">
+          🎀
+        </div>
+        <span class="profile-avatar-sparkle">✦</span>
+      </div>
+
+      <h3 id="profile-name-preview">Diana</h3>
+      <p id="profile-bio-preview">A construir a minha melhor versão, ao meu ritmo. 💕</p>
+      <span class="profile-tag">✨ PINK POWER GIRL</span>
+    </div>
+
+    <form id="profile-edit-form" class="profile-form">
+      <label for="profile-name">O teu nome</label>
+      <input
+        id="profile-name"
+        name="profileName"
+        type="text"
+        maxlength="30"
+        placeholder="Como te queres chamar?"
+        required
+      />
+
+      <label for="profile-bio">A tua descrição</label>
+      <textarea
+        id="profile-bio"
+        name="profileBio"
+        maxlength="160"
+        rows="3"
+        placeholder="Escreve algo sobre ti..."
+      ></textarea>
+
+      <label for="profile-photo">A tua fotografia</label>
+      <label class="profile-upload-button" for="profile-photo">
+        📸 Escolher fotografia
+      </label>
+      <input
+        id="profile-photo"
+        name="profilePhoto"
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        hidden
+      />
+      <p class="profile-help">Escolhe uma imagem JPG, PNG ou WEBP. A fotografia fica guardada neste navegador.</p>
+
+      <label for="profile-color">A cor do teu perfil</label>
+      <div class="profile-color-row">
+        <input id="profile-color" type="color" value="#f062a8" />
+        <span id="profile-color-label">Rosa pink</span>
+      </div>
+
+      <button type="submit" class="profile-save-button">
+        💖 Guardar o meu perfil
+      </button>
+
+      <button type="button" id="profile-remove-photo" class="profile-secondary-button">
+        Remover fotografia
+      </button>
+
+      <button type="button" id="profile-reset" class="profile-secondary-button">
+        Repor perfil inicial
+      </button>
+
+      <p id="profile-feedback" class="profile-feedback" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
   <!-- ENVELOPES SURPRESA -->
   <article class="pink-card envelopes-card" id="pink-envelopes">
     <div class="pink-card-heading">
@@ -562,5 +646,52 @@
       <div class="confirm-actions"><button class="button button-ghost" id="cancelConfirm">Cancelar</button><button class="button button-danger" id="acceptConfirm">Confirmar</button></div>
     </section>
   </div>
+<!-- PINK CLOSET -->
+<section class="pink-closet" id="pink-closet">
+  <div class="closet-heading">
+    <span class="closet-eyebrow">✦ O TEU CANTINHO DA MODA ✦</span>
+    <h2>🎀 PINK CLOSET</h2>
+    <p>Escolhe um acessório e deixa a tua gatinha ainda mais fofinha!</p>
+  </div>
+
+  <div class="closet-layout">
+    <div class="closet-preview">
+      <span class="closet-preview-label">A TUA GATINHA</span>
+
+      <div class="closet-stage">
+        <span class="closet-sparkle sparkle-one">✦</span>
+        <span class="closet-sparkle sparkle-two">✧</span>
+
+        <div class="closet-pet">
+          <span id="closet-worn-accessory" class="closet-worn-accessory">🎀</span>
+          <span class="closet-cat">🐱</span>
+        </div>
+
+        <p id="closet-outfit-name">Laço rosa</p>
+      </div>
+
+      <div class="closet-wallet">
+        <span>✨ As tuas estrelas</span>
+        <strong id="closet-star-count">0 ⭐</strong>
+      </div>
+
+      <button type="button" id="closet-remove-accessory" class="closet-remove">
+        Retirar acessório
+      </button>
+      <p class="closet-note">As tuas escolhas ficam guardadas neste navegador.</p>
+    </div>
+
+    <div class="closet-wardrobe">
+      <h3>O teu guarda-roupa 💕</h3>
+      <p class="closet-wardrobe-intro">
+        Desbloqueia novos acessórios usando as tuas estrelas.
+      </p>
+
+      <div id="closet-accessory-grid" class="closet-accessory-grid"></div>
+      <p id="closet-feedback" class="closet-feedback" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
 </body>
 </html>

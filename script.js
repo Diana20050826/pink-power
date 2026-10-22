@@ -2010,3 +2010,467 @@ initialise();
     setMessage(`Miau! Sou ${world.petName}. Faz-me festinhas enquanto esperas pela primeira surpresa! 🐱`);
   }
 })();
+
+/* ==================================
+   PINK CLOSET — FUNCIONALIDADE
+================================== */
+
+(() => {
+  const WORLD_KEY = "pinkPowerWorld_v1";
+  const CLOSET_KEY = "pinkPowerCloset_v1";
+
+  const accessories = [
+    { id: "bow", name: "Laço rosa", emoji: "🎀", cost: 0 },
+    { id: "crown", name: "Coroa real", emoji: "👑", cost: 10 },
+    { id: "flower", name: "Flor fofinha", emoji: "🌸", cost: 15 },
+    { id: "star", name: "Estrela mágica", emoji: "⭐", cost: 20 },
+    { id: "glasses", name: "Óculos fashion", emoji: "👓", cost: 25 },
+    { id: "halo", name: "Auréola", emoji: "😇", cost: 30 },
+    { id: "heart", name: "Coração rosa", emoji: "💗", cost: 35 },
+    { id: "unicorn", name: "Unicórnio", emoji: "🦄", cost: 50 }
+  ];
+
+  const defaultCloset = {
+    unlocked: ["bow"],
+    equipped: "bow",
+    stars: 0
+  };
+
+  function readJSON(key, fallback) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key));
+      return value && typeof value === "object" ? value : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  let closet = {
+    ...defaultCloset,
+    ...readJSON(CLOSET_KEY, {})
+  };
+
+  closet.unlocked = Array.isArray(closet.unlocked)
+    ? [...new Set(["bow", ...closet.unlocked])]
+    : ["bow"];
+
+  if (!accessories.some(item => item.id === closet.equipped) ||
+      !closet.unlocked.includes(closet.equipped)) {
+    closet.equipped = "bow";
+  }
+
+  function getWorld() {
+    return readJSON(WORLD_KEY, {});
+  }
+
+  function getStars() {
+    const world = getWorld();
+
+    // Usa o saldo partilhado com a gatinha, se existir.
+    if (Number.isFinite(world.stars)) {
+      return Math.max(0, world.stars);
+    }
+
+    return Math.max(0, Number(closet.stars) || 0);
+  }
+
+  function saveCloset() {
+    try {
+      localStorage.setItem(CLOSET_KEY, JSON.stringify(closet));
+    } catch (error) {
+      console.error("Não foi possível guardar o PINK CLOSET:", error);
+    }
+  }
+
+  function spendStars(amount) {
+    const world = getWorld();
+
+    if (Number.isFinite(world.stars)) {
+      if (world.stars < amount) return false;
+
+      world.stars -= amount;
+
+      try {
+        localStorage.setItem(WORLD_KEY, JSON.stringify(world));
+      } catch (error) {
+        console.error("Não foi possível guardar as estrelas:", error);
+        return false;
+      }
+
+      return true;
+    }
+
+    if (closet.stars < amount) return false;
+
+    closet.stars -= amount;
+    return true;
+  }
+
+  function updateExistingPet() {
+    const item = accessories.find(a => a.id === closet.equipped);
+    if (!item) return;
+
+    // Compatibilidade com a versão anterior da gatinha.
+    const existingAccessory = document.getElementById("pet-accessory");
+    if (existingAccessory) {
+      existingAccessory.textContent = item.emoji;
+    }
+
+    const existingStars = document.getElementById("pet-stars");
+    if (existingStars) {
+      existingStars.textContent = getStars();
+    }
+
+    const existingPetMessage = document.getElementById("pet-message");
+    if (existingPetMessage) {
+      existingPetMessage.textContent =
+        `Olha o meu novo visual! Estou a usar ${item.name}! 💗`;
+    }
+  }
+
+  function renderCloset() {
+    const grid = document.getElementById("closet-accessory-grid");
+    const starCount = document.getElementById("closet-star-count");
+    const worn = document.getElementById("closet-worn-accessory");
+    const outfitName = document.getElementById("closet-outfit-name");
+    const removeButton = document.getElementById("closet-remove-accessory");
+
+    if (!grid || !starCount || !worn || !outfitName) return;
+
+    const stars = getStars();
+    const equippedItem = accessories.find(
+      item => item.id === closet.equipped
+    ) || accessories[0];
+
+    starCount.textContent = `${stars} ⭐`;
+    worn.textContent = equippedItem.emoji;
+    outfitName.textContent = equippedItem.name;
+
+    grid.innerHTML = accessories.map(item => {
+      const unlocked = closet.unlocked.includes(item.id);
+      const equipped = closet.equipped === item.id;
+      const canAfford = stars >= item.cost;
+
+      let buttonText = "Desbloquear";
+      if (equipped) buttonText = "✓ Equipado";
+      else if (unlocked) buttonText = "Equipar";
+      else if (!canAfford) buttonText = `Faltam ${item.cost - stars} ⭐`;
+
+      return `
+        <article class="closet-item ${equipped ? "is-equipped" : ""} ${!unlocked ? "is-locked" : ""}">
+          <span class="closet-item-emoji">${item.emoji}</span>
+          <span class="closet-item-name">${item.name}</span>
+          <span class="closet-item-cost">
+            ${item.cost === 0 ? "Oferta inicial 💕" : `${item.cost} ⭐`}
+          </span>
+          <button
+            type="button"
+            class="closet-item-button"
+            data-closet-item="${item.id}"
+            ${equipped || (!unlocked && !canAfford) ? "disabled" : ""}
+          >${buttonText}</button>
+        </article>
+      `;
+    }).join("");
+
+    if (removeButton) {
+      removeButton.disabled = closet.equipped === "bow";
+    }
+
+    updateExistingPet();
+  }
+
+  function showFeedback(message) {
+    const feedback = document.getElementById("closet-feedback");
+    if (feedback) feedback.textContent = message;
+  }
+
+  document.addEventListener("click", event => {
+    const button = event.target.closest("[data-closet-item]");
+    if (!button) return;
+
+    const item = accessories.find(
+      accessory => accessory.id === button.dataset.closetItem
+    );
+
+    if (!item) return;
+
+    if (closet.unlocked.includes(item.id)) {
+      closet.equipped = item.id;
+      saveCloset();
+      renderCloset();
+      showFeedback(`${item.emoji} A tua gatinha está a usar ${item.name}!`);
+      return;
+    }
+
+    if (getStars() < item.cost) {
+      showFeedback(`Ainda te faltam ${item.cost - getStars()} estrelas. ✨`);
+      return;
+    }
+
+    if (!spendStars(item.cost)) {
+      showFeedback("Não foi possível utilizar as estrelas. Tenta novamente.");
+      return;
+    }
+
+    closet.unlocked.push(item.id);
+    closet.equipped = item.id;
+
+    saveCloset();
+    renderCloset();
+    showFeedback(`🎉 Desbloqueaste ${item.name}! Já está equipado.`);
+  });
+
+  document.getElementById("closet-remove-accessory")
+    ?.addEventListener("click", () => {
+      closet.equipped = "bow";
+      saveCloset();
+      renderCloset();
+      showFeedback("🎀 A tua gatinha voltou ao look inicial!");
+    });
+
+  // Atualiza o saldo se outra funcionalidade o alterar no mesmo separador.
+  window.addEventListener("pinkPowerStarsUpdated", renderCloset);
+
+  // Atualiza o saldo quando outra página do site o altera.
+  window.addEventListener("storage", event => {
+    if (event.key === WORLD_KEY || event.key === CLOSET_KEY) {
+      closet = {
+        ...defaultCloset,
+        ...readJSON(CLOSET_KEY, {})
+      };
+      renderCloset();
+    }
+  });
+
+  renderCloset();
+})();
+
+/* ==================================
+   PINK POWER — PERFIL PESSOAL
+================================== */
+
+(() => {
+  const STORAGE_KEY = "pinkPowerProfile_v1";
+
+  const defaults = {
+    name: "Diana",
+    bio: "A construir a minha melhor versão, ao meu ritmo. 💕",
+    color: "#f062a8",
+    photo: ""
+  };
+
+  const $ = id => document.getElementById(id);
+
+  const form = $("profile-edit-form");
+  const photoInput = $("profile-photo");
+
+  if (!form || !photoInput) return;
+
+  function loadProfile() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+      return saved && typeof saved === "object"
+        ? { ...defaults, ...saved }
+        : { ...defaults };
+    } catch {
+      return { ...defaults };
+    }
+  }
+
+  let profile = loadProfile();
+  let pendingPhoto = profile.photo || "";
+
+  function renderProfile() {
+    $("profile-name").value = profile.name;
+    $("profile-bio").value = profile.bio;
+    $("profile-color").value = profile.color;
+
+    $("profile-name-preview").textContent = profile.name || "A minha conta";
+    $("profile-bio-preview").textContent =
+      profile.bio || "Este é o meu cantinho PINK POWER. 💗";
+
+    $("profile-color-label").textContent = profile.color.toUpperCase();
+
+    $("pink-profile").style.setProperty("--profile-accent", profile.color);
+    $("profile-preview").style.setProperty("--profile-accent", profile.color);
+
+    const photo = $("profile-photo-preview");
+    const placeholder = $("profile-avatar-placeholder");
+
+    if (profile.photo) {
+      photo.src = profile.photo;
+      photo.hidden = false;
+      placeholder.hidden = true;
+    } else {
+      photo.removeAttribute("src");
+      photo.hidden = true;
+      placeholder.hidden = false;
+    }
+  }
+
+  function showMessage(message) {
+    $("profile-feedback").textContent = message;
+  }
+
+  function saveProfile() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+      return true;
+    } catch (error) {
+      console.error("Erro ao guardar o perfil:", error);
+      showMessage(
+        "Não foi possível guardar. Experimenta uma imagem mais pequena ou com outro formato."
+      );
+      return false;
+    }
+  }
+
+  // Pré-visualiza a cor imediatamente.
+  $("profile-color").addEventListener("input", event => {
+    const color = event.target.value;
+
+    $("pink-profile").style.setProperty("--profile-accent", color);
+    $("profile-preview").style.setProperty("--profile-accent", color);
+    $("profile-color-label").textContent = color.toUpperCase();
+  });
+
+  // Redimensiona a fotografia para reduzir o espaço ocupado.
+  function preparePhoto(file) {
+    return new Promise((resolve, reject) => {
+      if (!file || !file.type.startsWith("image/")) {
+        reject(new Error("Escolhe um ficheiro de imagem válido."));
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        reject(new Error("A imagem deve ter menos de 10 MB."));
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onerror = () => reject(new Error("Não foi possível ler a imagem."));
+
+      reader.onload = () => {
+        const image = new Image();
+
+        image.onerror = () => reject(new Error("Não foi possível abrir a imagem."));
+
+        image.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxSide = 512;
+          const scale = Math.min(
+            1,
+            maxSide / Math.max(image.width, image.height)
+          );
+
+          canvas.width = Math.max(1, Math.round(image.width * scale));
+          canvas.height = Math.max(1, Math.round(image.height * scale));
+
+          const context = canvas.getContext("2d");
+
+          if (!context) {
+            reject(new Error("Não foi possível preparar a fotografia."));
+            return;
+          }
+
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+          // Converte para JPEG comprimido para facilitar o armazenamento.
+          resolve(canvas.toDataURL("image/jpeg", 0.78));
+        };
+
+        image.src = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+  photoInput.addEventListener("change", async () => {
+    const file = photoInput.files?.[0];
+    if (!file) return;
+
+    showMessage("A preparar a tua fotografia... 💗");
+
+    try {
+      pendingPhoto = await preparePhoto(file);
+
+      const preview = $("profile-photo-preview");
+      preview.src = pendingPhoto;
+      preview.hidden = false;
+      $("profile-avatar-placeholder").hidden = true;
+
+      showMessage("Fotografia pronta! Carrega em guardar para confirmar. ✨");
+    } catch (error) {
+      showMessage(error.message || "Ocorreu um erro com a fotografia.");
+      photoInput.value = "";
+    }
+  });
+
+  // Guarda o nome, a descrição, a cor e a fotografia.
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = $("profile-name").value.trim();
+    const bio = $("profile-bio").value.trim();
+    const color = $("profile-color").value;
+
+    if (!name) {
+      showMessage("Escreve o teu nome antes de guardar. 💕");
+      return;
+    }
+
+    const previousProfile = { ...profile };
+
+    profile = {
+      name,
+      bio,
+      color,
+      photo: pendingPhoto
+    };
+
+    if (!saveProfile()) {
+      profile = previousProfile;
+      return;
+    }
+
+    renderProfile();
+    showMessage("Perfil guardado com sucesso! 💖");
+  });
+
+  // Remove apenas a fotografia.
+  $("profile-remove-photo").addEventListener("click", () => {
+    pendingPhoto = "";
+    profile.photo = "";
+    photoInput.value = "";
+
+    if (saveProfile()) {
+      renderProfile();
+      showMessage("Fotografia removida. Podes escolher outra quando quiseres. 🎀");
+    }
+  });
+
+  // Repõe todos os campos do perfil.
+  $("profile-reset").addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "Queres mesmo repor o perfil inicial? O nome, a descrição, a cor e a fotografia serão repostos."
+    );
+
+    if (!confirmed) return;
+
+    profile = { ...defaults };
+    pendingPhoto = "";
+    photoInput.value = "";
+
+    if (saveProfile()) {
+      renderProfile();
+      showMessage("O teu perfil voltou ao estado inicial. 💗");
+    }
+  });
+
+  // Carrega o perfil guardado ao abrir a página.
+  renderProfile();
+})();
